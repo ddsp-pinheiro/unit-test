@@ -29,7 +29,25 @@ public class BasicServiceTest {
    private BasicService basicService;
 
     @Test
-    void ShouldReturnId(){
+    void ShouldCreateANewEntity(){
+        //Arrange
+        var mockBasicEntity =  new BasicEntity(
+                1L,
+                "Dani"
+        );
+        Mockito.when(mockBasicRepository.save(any())).thenReturn(mockBasicEntity);
+
+        //Act
+        BasicEntity reponse = basicService.save(mockBasicEntity);
+
+        //Assert
+        assertNotNull(reponse);
+        assertEquals(BasicEntity.class,reponse.getClass());
+        assertEquals(mockBasicEntity.getId(),reponse.getId());
+        assertEquals(mockBasicEntity.getName(),reponse.getName());
+    }
+    @Test
+    void ShouldReturnById(){
         //Arrange
         var mockBasicEntity =  new BasicEntity(
                 1L,
@@ -46,5 +64,37 @@ public class BasicServiceTest {
         assertEquals(basicEntity.getName(),"Dani");
         assertEquals(basicEntity.getId(), mockBasicEntity.getId());
         assertEquals(basicEntity.getName(), mockBasicEntity.getName());
+    }
+
+    @Test
+    void ShouldReturnByName(){
+        //Arrange
+        var mockBasicEntity =  new BasicEntity(
+                1L,
+                "Dani"
+        );
+        Mockito.when(mockBasicRepository.findByName(anyString())).thenReturn(Optional.of(mockBasicEntity));
+
+        //Act
+        BasicEntity basicEntity = basicService.getByName("Dani");
+
+        //Assert
+        assertNotNull(basicEntity);
+        assertEquals(basicEntity.getId(),1L);
+        assertEquals(basicEntity.getName(),"Dani");
+        assertEquals(basicEntity.getId(), mockBasicEntity.getId());
+        assertEquals(basicEntity.getName(), mockBasicEntity.getName());
+    }
+
+    @Test
+    void ShouldDeleteByI(){
+        //Arrange
+        Mockito.doNothing().when(mockBasicRepository).deleteById(anyLong());
+
+        //Act
+        basicService.deleteById(1L);
+
+        //Assert
+        Mockito.verify(mockBasicRepository, Mockito.times(1)).deleteById(anyLong());
     }
 }
