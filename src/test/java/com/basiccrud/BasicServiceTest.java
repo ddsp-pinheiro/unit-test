@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -45,6 +46,22 @@ public class BasicServiceTest {
         assertEquals(BasicEntity.class,reponse.getClass());
         assertEquals(mockBasicEntity.getId(),reponse.getId());
         assertEquals(mockBasicEntity.getName(),reponse.getName());
+    }
+    @Test
+    void ShouldNotCreateEntityAreadyExists(){
+        var mockBasicEntity =  new BasicEntity(
+                1L,
+                "Dani"
+        );
+        Mockito.when(mockBasicRepository.findById(anyLong())).thenReturn(Optional.of(mockBasicEntity));
+
+        //Act
+        try {
+            basicService.save(mockBasicEntity);
+        }catch (Exception ex){
+            assertEquals(DuplicateKeyException.class, ex.getClass());
+        }
+
     }
     @Test
     void ShouldReturnById(){
