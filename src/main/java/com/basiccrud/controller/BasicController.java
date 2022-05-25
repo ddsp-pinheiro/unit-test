@@ -5,21 +5,18 @@ import com.basiccrud.mapper.BasicMapper;
 import com.basiccrud.request.BasicRequest;
 import com.basiccrud.response.BasicResponse;
 import com.basiccrud.service.BasicService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/unittest")
 public class BasicController {
-
-    @Autowired
-    private BasicMapper basicMapper;
-
-    @Autowired
-    private BasicService basicService;
+    private final BasicMapper basicMapper;
+    private final BasicService basicService;
 
     private static final String ID = "x-id";
 

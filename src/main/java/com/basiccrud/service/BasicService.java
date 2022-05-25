@@ -4,7 +4,6 @@ import com.basiccrud.entity.BasicEntity;
 import com.basiccrud.exception.NotFoundException;
 import com.basiccrud.repository.BasicRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +13,6 @@ public class BasicService {
 
     private static final String NAME_NOT_FOUND = "Name not found";
     private static final String ID_NOT_FOUND = "Id not found";
-
-
     private final BasicRepository basicRepository;
 
     public BasicEntity save(BasicEntity basicEntity){

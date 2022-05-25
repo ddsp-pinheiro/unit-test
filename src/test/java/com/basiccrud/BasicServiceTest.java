@@ -3,7 +3,6 @@ package com.basiccrud;
 import com.basiccrud.entity.BasicEntity;
 import com.basiccrud.repository.BasicRepository;
 import com.basiccrud.service.BasicService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
